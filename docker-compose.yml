@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: Abdu0811
+      POSTGRES_DB: n9
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_USER: user
+      DB_PASSWORD: Abdu0811
+      DB_NAME: n9 
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "7777:7777"
+    volumes:
+      - .:/app
+    command: ["./main"]
+
+volumes:
+  db_data:
